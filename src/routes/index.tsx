@@ -20,16 +20,28 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Join Rohit & Yamini at Golden Gate Banquet Hall on 29 January 2027, 7 PM onwards. Wedding details, countdown, venue map and calendar invite.",
+          "Join Rohit Saha & Yamini Luckwal at Golden Gate Banquet Hall on Friday, 29 January 2027, 7 PM onwards. Wedding details, countdown, venue map and calendar invite.",
       },
-      { property: "og:title", content: "Rohit & Yamini | Wedding Invitation" },
+      { property: "og:title", content: "Rohit & Yamini | Wedding Invitation, 29 Jan 2027" },
       {
         property: "og:description",
         content:
-          "A wedding celebration at Golden Gate Banquet Hall, 29 January 2027 at 7 PM. All event details, venue and RSVP in one place.",
+          "Rohit Saha weds Yamini Luckwal — Friday, 29 January 2027, 7 PM onwards at Golden Gate Banquet Hall. All event details, venue and RSVP in one place.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://rohit-weds-yamini.invitingyou.top/" },
+      { property: "og:image", content: "https://rohit-weds-yamini.invitingyou.top/og.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Rohit & Yamini | Wedding Invitation, 29 Jan 2027" },
+      {
+        name: "twitter:description",
+        content:
+          "Rohit Saha weds Yamini Luckwal — Friday, 29 January 2027, 7 PM onwards at Golden Gate Banquet Hall.",
+      },
+      { name: "twitter:image", content: "https://rohit-weds-yamini.invitingyou.top/og.jpg" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://rohit-weds-yamini.invitingyou.top/" },
     ],
   }),
   component: Invitation,

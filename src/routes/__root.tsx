@@ -73,20 +73,38 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Rohit & Yamini | Wedding Invitation" },
+      { title: "Rohit & Yamini | Wedding Invitation, 29 Jan 2027" },
       {
         name: "description",
-        content: "Rohit Saha & Yamini Luckwal — wedding at Golden Gate Banquet Hall, 29 January 2027, 7 PM.",
+        content:
+          "Rohit Saha weds Yamini Luckwal — Friday, 29 January 2027, 7 PM onwards at Golden Gate Banquet Hall.",
       },
-      { property: "og:title", content: "Rohit & Yamini | Wedding Invitation" },
+      { property: "og:title", content: "Rohit & Yamini | Wedding Invitation, 29 Jan 2027" },
       {
         property: "og:description",
-        content: "Rohit Saha & Yamini Luckwal — wedding at Golden Gate Banquet Hall, 29 January 2027, 7 PM.",
+        content:
+          "Rohit Saha weds Yamini Luckwal — Friday, 29 January 2027, 7 PM onwards at Golden Gate Banquet Hall.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Rohit & Yamini Wedding" },
+      { property: "og:url", content: "https://rohit-weds-yamini.invitingyou.top/" },
+      { property: "og:image", content: "https://rohit-weds-yamini.invitingyou.top/og.jpg" },
+      { property: "og:image:secure_url", content: "https://rohit-weds-yamini.invitingyou.top/og.jpg" },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1223" },
+      { property: "og:image:height", content: "683" },
+      { property: "og:image:alt", content: "Rohit Saha & Yamini Luckwal — Wedding, 29 Jan 2027" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Rohit & Yamini | Wedding Invitation, 29 Jan 2027" },
+      {
+        name: "twitter:description",
+        content:
+          "Rohit Saha weds Yamini Luckwal — Friday, 29 January 2027, 7 PM onwards at Golden Gate Banquet Hall.",
+      },
+      { name: "twitter:image", content: "https://rohit-weds-yamini.invitingyou.top/og.jpg" },
     ],
     links: [
+      { rel: "canonical", href: "https://rohit-weds-yamini.invitingyou.top/" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
