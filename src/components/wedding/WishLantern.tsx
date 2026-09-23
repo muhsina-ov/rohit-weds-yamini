@@ -38,7 +38,7 @@ export function WishLantern() {
       };
     });
     setReleased((current) => [...current.slice(-44), ...batch]);
-    setMessage("The sky is glowing for Rohit and Yamini.");
+    setMessage("The sky is glowing for Yamini and Rohit.");
     window.setTimeout(() => {
       const batchIds = new Set(batch.map((entry) => entry.id));
       setReleased((current) => current.filter((entry) => !batchIds.has(entry.id)));

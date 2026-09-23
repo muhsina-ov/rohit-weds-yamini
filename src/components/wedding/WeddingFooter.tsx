@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { couple, rsvp, venue } from "@/lib/wedding";
+import { Minus, Plus } from "lucide-react";
+import { buildRsvpWhatsappHref, couple, rsvp, venue } from "@/lib/wedding";
 import { useParallax } from "@/hooks/use-reveal";
 import footerWash from "@/assets/footer-wash.jpg";
 const floral = "https://media.invitestory.in/seashell-vows/src/assets/floral-spray.png";
@@ -9,6 +10,10 @@ const lanterns = "https://media.invitestory.in/seashell-vows/src/assets/lantern-
 export function WeddingFooter() {
   const drift = useParallax(0.18);
   const [shareStatus, setShareStatus] = useState("Share this invitation");
+  const [name, setName] = useState("");
+  const [attending, setAttending] = useState<"yes" | "no" | "">("");
+  const [guests, setGuests] = useState(2);
+  const [formError, setFormError] = useState("");
 
   async function copyInvitation() {
     try {
@@ -17,6 +22,24 @@ export function WeddingFooter() {
     } catch {
       setShareStatus("Copy the link from your browser");
     }
+  }
+
+  function submitRsvp() {
+    if (!name.trim()) {
+      setFormError("Please tell us your name.");
+      return;
+    }
+    if (!attending) {
+      setFormError("Please choose Yes or No.");
+      return;
+    }
+    setFormError("");
+    const href = buildRsvpWhatsappHref({
+      name,
+      attending,
+      guests: attending === "yes" ? guests : 0,
+    });
+    window.open(href, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -63,7 +86,7 @@ export function WeddingFooter() {
         />
         <p className="mt-4 script text-lg text-primary">We cannot wait to celebrate with you</p>
         <h2 className="mt-4 font-display text-[2.65rem] leading-[1.05]">
-          {couple.groom} <span className="script text-2xl text-primary">&</span> {couple.bride}
+          {couple.bride} <span className="script text-2xl text-primary">&</span> {couple.groom}
         </h2>
 
         <div className="mt-7 grid w-full max-w-sm grid-cols-2 border-y border-primary/25 py-4 text-left">
@@ -80,28 +103,112 @@ export function WeddingFooter() {
         <div className="card-soft mt-7 w-full max-w-sm p-5 text-center">
           <p className="script text-lg text-primary">RSVP</p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Kindly confirm your presence by calling or messaging
+            Kindly let us know by 15 January 2027
           </p>
-          <a
-            href={rsvp.phoneHref}
-            className="mt-2 block font-display text-2xl text-foreground"
+
+          <label
+            htmlFor="rsvp-name"
+            className="mt-4 block text-left text-[0.62rem] uppercase tracking-airy text-muted-foreground"
           >
-            {rsvp.phoneDisplay}
-          </a>
-          <div className="mt-4 grid grid-cols-2 gap-3">
+            Your name
+          </label>
+          <input
+            id="rsvp-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g. Priya Sharma"
+            autoComplete="name"
+            className="mt-2 min-h-[48px] w-full rounded-sm border border-primary/30 bg-background/80 px-4 text-sm text-foreground placeholder:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          />
+
+          <p className="mt-4 text-left text-[0.62rem] uppercase tracking-airy text-muted-foreground">
+            Will you attend?
+          </p>
+          <div className="mt-2 grid grid-cols-2 gap-3" role="radiogroup" aria-label="Will you attend?">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={attending === "yes"}
+              onClick={() => setAttending("yes")}
+              className={`press flex min-h-[48px] items-center justify-center rounded-sm border px-4 text-[0.66rem] uppercase tracking-[0.2em] ${
+                attending === "yes"
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-primary/45 bg-background/70 text-foreground"
+              }`}
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={attending === "no"}
+              onClick={() => setAttending("no")}
+              className={`press flex min-h-[48px] items-center justify-center rounded-sm border px-4 text-[0.66rem] uppercase tracking-[0.2em] ${
+                attending === "no"
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-primary/45 bg-background/70 text-foreground"
+              }`}
+            >
+              No
+            </button>
+          </div>
+
+          {attending === "yes" && (
+            <div className="mt-4 rounded-sm border border-primary/25 bg-background/60 p-3">
+              <p className="text-[0.62rem] uppercase tracking-airy text-muted-foreground">
+                Guests (including you)
+              </p>
+              <div className="mt-2 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => setGuests((g) => Math.max(1, g - 1))}
+                  disabled={guests <= 1}
+                  aria-label="One guest fewer"
+                  className="press grid h-11 w-11 place-items-center rounded-full border border-primary/40 text-primary disabled:opacity-40"
+                >
+                  <Minus className="h-4 w-4" />
+                </button>
+                <p className="font-display text-2xl" aria-live="polite">
+                  {guests} {guests === 1 ? "guest" : "guests"}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setGuests((g) => Math.min(10, g + 1))}
+                  disabled={guests >= 10}
+                  aria-label="One guest more"
+                  className="press grid h-11 w-11 place-items-center rounded-full border border-primary/40 text-primary disabled:opacity-40"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {formError && (
+            <p role="alert" className="mt-3 text-xs text-destructive">
+              {formError}
+            </p>
+          )}
+
+          <button
+            type="button"
+            onClick={submitRsvp}
+            className="press mt-4 flex min-h-[52px] w-full items-center justify-center rounded-sm bg-primary px-4 text-[0.66rem] uppercase tracking-[0.2em] text-primary-foreground"
+          >
+            Send RSVP on WhatsApp
+          </button>
+          <p className="mt-2 text-xs text-muted-foreground">
+            This opens WhatsApp with your reply addressed to {rsvp.phoneDisplay}.
+          </p>
+
+          <div className="mt-4 border-t border-primary/20 pt-4">
+            <p className="text-xs text-muted-foreground">Prefer to talk?</p>
             <a
               href={rsvp.phoneHref}
-              className="press flex min-h-[48px] items-center justify-center rounded-sm bg-primary px-4 text-[0.66rem] uppercase tracking-[0.2em] text-primary-foreground"
+              className="mt-1 block font-display text-2xl text-foreground"
             >
-              Call now
-            </a>
-            <a
-              href={rsvp.whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="press flex min-h-[48px] items-center justify-center rounded-sm border border-primary/45 bg-background/70 px-4 text-[0.66rem] uppercase tracking-[0.2em] text-foreground"
-            >
-              WhatsApp
+              {rsvp.phoneDisplay}
             </a>
           </div>
         </div>

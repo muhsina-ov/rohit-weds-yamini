@@ -65,9 +65,9 @@ export function Hero() {
             className="mt-3 font-display text-[3.15rem] leading-[1.02] text-foreground animate-ink"
             style={{ animationDelay: "0.7s" }}
           >
-            {couple.groom}
-            <span className="script mx-2 block text-2xl text-primary">&</span>
             {couple.bride}
+            <span className="script mx-2 block text-2xl text-primary">&</span>
+            {couple.groom}
           </h1>
           <p
             className="mt-5 text-[0.66rem] uppercase tracking-airy text-muted-foreground animate-ink"
